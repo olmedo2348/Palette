@@ -23,6 +23,7 @@ import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
@@ -64,7 +65,9 @@ class MainActivity : ComponentActivity() {
             val navController = rememberNavController()
             PlacesIntheWorldTheme {
                 Scaffold(
-                    topBar = { MyTopBar() }
+                    topBar = { MyTopBar() },
+                    floatingActionButton = { FAB(navController = navController) },
+                    floatingActionButtonPosition = FabPosition.End
                 ) {
                     Box(
                         modifier = Modifier
@@ -94,7 +97,6 @@ class MainActivity : ComponentActivity() {
                         }
                     }
                 }
-                FAB(navController = navController)
             }
         }
     }
@@ -106,11 +108,21 @@ fun MyTopBar() {
     TopAppBar(
         title = { Text(text = "PlaceIntheWorld", color = Color.White) },
         colors = TopAppBarDefaults.mediumTopAppBarColors(containerColor = Principal),
-        actions = {
+        navigationIcon = {
             IconButton(onClick = { /*TODO*/ }) {
                 Icon(
+                    imageVector = Icons.Filled.Menu,
+                    contentDescription = "",
+                    tint = Color.White
+                )
+            }
+        },
+        actions = {
+            IconButton(onClick = { /*TODO*/ }) {
+
+                Icon(
                     imageVector = Icons.Filled.MoreVert,
-                    contentDescription = "Menu",
+                    contentDescription = "",
                     tint = Color.White
                 )
             }
@@ -119,22 +131,21 @@ fun MyTopBar() {
 }
 
 @Composable
-private fun FAB(navController: NavHostController
+private fun FAB(
+    navController: NavHostController
 ) {
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.BottomEnd
-    )  {
+    ) {
         FloatingActionButton(
             onClick = {
-                      navController.navigate("PatallaLugares")
+                navController.navigate("PatallaLugares")
             },
-
-            modifier = Modifier.padding(horizontal = 10.dp, vertical = 10.dp),
             shape = RoundedCornerShape(40.dp),
             containerColor = Segundo
         ) {
-            Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = "check"  )
+            Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = "check")
         }
     }
 }
