@@ -57,40 +57,41 @@ data class Lugares(
 fun getLugares(): List<Lugares> {
     return listOf(
         Lugares(
-            "Merida",
-            R.drawable.image
+            "Morella",
+            R.drawable.image,
         ),
         Lugares(
             "Lugo",
-            R.drawable.image1
+            R.drawable.image1,
+
         ),
         Lugares(
-            "Antonio Sanz",
-            R.drawable.image2
+            "Bangkok",
+            R.drawable.image2,
         ),
         Lugares(
-            "Carlos Pérez",
-            R.drawable.image3
+            "Perú",
+            R.drawable.image3,
         ),
         Lugares(
-            "Beatriz Martos",
-            R.drawable.image4
+            "Pekín",
+            R.drawable.image4,
         ),
         Lugares(
-            "Rodrigo Gimernez",
-            R.drawable.image5
+            "Granada",
+            R.drawable.image5,
         ),
         Lugares(
-            "Pedro García",
-            R.drawable.image6
+            "Atenas",
+            R.drawable.image6,
         ),
         Lugares(
-            "Ramon Dopico",
-            R.drawable.image7
+            "Yucatán",
+            R.drawable.image7,
         ),
         Lugares(
-            "Gimena Roto",
-            R.drawable.image8
+            "Seychelles",
+            R.drawable.image8,
         ),
     )
 }
