@@ -1,6 +1,7 @@
 package com.example.placesintheworld
 
 import android.annotation.SuppressLint
+import android.graphics.BitmapFactory
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -11,8 +12,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -25,11 +28,13 @@ import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.times
+import androidx.palette.graphics.Palette
 import com.example.placesintheworld.ui.theme.Principal
 import com.example.placesintheworld.ui.theme.Salty
 import com.example.placesintheworld.ui.theme.Segundo
@@ -37,140 +42,49 @@ import com.example.placesintheworld.ui.theme.Segundo
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun Imagen(navControllerName: String, navControllerImagen: Int) {
-    var rotation by remember { mutableStateOf(0f) }
-    var scale by remember { mutableStateOf(1f) }
-    var alpha by remember { mutableStateOf(1f) }
-    var blur by remember { mutableStateOf(0f) }
+fun Imagen(navControllerImagen: Int) {
+    val context = LocalContext.current
 
-    val imageSliderModel = remember {
-        ImageSliderModel(
-            rotationSlider = SliderFunction("Rotación", 0f, -180f, 180f) { rotation = it },
-            scaleSlider = SliderFunction("Escalado", 1f, 0.5f, 2f) { scale = it },
-            alphaSlider = SliderFunction("Efecto Alfa", 1f, 0f, 1f) { alpha = it },
-            blurSlider = SliderFunction("Desenfoque", 0f, 0f, 1f) { blur = it }
-        )
+    val bitmap = remember {
+        BitmapFactory.decodeResource(context.resources, )
     }
 
-    Column(
-        Modifier
-            .fillMaxSize()
-            .background(
-                brush = Brush.verticalGradient(
-                    colors = listOf(
-                        Principal, Segundo
+    /* Create the Palette, pass the bitmap to it */
+    val palette = remember {
+        Palette.from(bitmap).generate()
+    }
+
+    /* Get the dark vibrant swatch */
+    val darkVibrantSwatch = palette.darkVibrantSwatch
+    val vibrantSwatch = palette.vibrantSwatch
+    val lightVibrantSwatch = palette.lightMutedSwatch
+    val lightMutedSwatch = palette.lightMutedSwatch
+    val mutedSwatch = palette.mutedSwatch
+    val darkMutedSwatch = palette.darkMutedSwatch
+
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(
+                        text = "Green Hoodie",
+                        color = darkVibrantSwatch?.let { Color(it.titleTextColor) } ?: Color.Red
                     )
-                )
-            ),
-    )
-    {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .fillMaxWidth()
-        ) {
-            Text(
-                text = navControllerName,
-                fontSize = 60.sp,
-                color = Color.White,
-                fontFamily = Salty,
-                fontWeight = FontWeight.Bold,
+                },
+                /* Check for null before accessing properties on a swatch */
+                /* Fall back to other colors if the dark vibrant swatch is not available */
+                backgroundColor = darkVibrantSwatch?.let { Color(it.rgb) }
+                    ?: Color.Transparent
             )
         }
-        ImageSlider(navControllerImagen, imageSliderModel, rotation, scale, alpha, blur)
-    }
-}
-
-data class SliderFunction(
-    val name: String,
-    val initValue: Float,
-    val minValue: Float,
-    val maxValue: Float,
-    val onValueChanged: (Float) -> Unit
-)
-
-data class ImageSliderModel(
-    val rotationSlider: SliderFunction,
-    val scaleSlider: SliderFunction,
-    val alphaSlider: SliderFunction,
-    val blurSlider: SliderFunction
-)
-@Composable
-fun ImageSlider(navControllerImagen: Int,
-                sliderModel: ImageSliderModel,
-                rotation: Float,
-                scale: Float,
-                alpha: Float,
-                blur: Float) {
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
     ) {
-
-        Box(
+        Image(
+            painter = painterResource(id = navControllerImagen),
+            contentDescription = null,
             modifier = Modifier
-                .weight(1f)
                 .fillMaxSize()
-        ) {
-            val scaledModifier = Modifier
-                .graphicsLayer(
-                    scaleX = 1 + scale / 2,
-                    scaleY = 1 - scale / 5,
-                    alpha = alpha,
-                    rotationZ = rotation
-                )
 
-            Image(
-                painter = painterResource(id = navControllerImagen),
-                contentDescription = null,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .then(scaledModifier)
-                    .blur(
-                        radiusX = blur * 10.dp,
-                        radiusY = blur * 10.dp,
-                        edgeTreatment = BlurredEdgeTreatment.Unbounded
-                    )
-            )
-        }
-        // Rotación Slider
-        SliderFunctionSlider(sliderModel.rotationSlider, rotation)
-
-        // Escalado Slider
-        SliderFunctionSlider(sliderModel.scaleSlider, scale)
-
-        // Efecto Alfa Slider
-        SliderFunctionSlider(sliderModel.alphaSlider, alpha)
-
-        // Desenfoque Slider
-        SliderFunctionSlider(sliderModel.blurSlider, blur)
-    }
-}
-
-@Composable
-fun SliderFunctionSlider(sliderFunction: SliderFunction, currentValue: Float) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(bottom = 16.dp)
-    ) {
-        Text(
-            text = sliderFunction.name,
-            fontSize = 18.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color.White
-        )
-        Spacer(modifier = Modifier.width(16.dp))
-        Slider(
-            value = currentValue,
-            onValueChange = { sliderFunction.onValueChanged(it) },
-            valueRange = sliderFunction.minValue..sliderFunction.maxValue,
-            modifier = Modifier
-                .weight(1f)
-                .padding(end = 16.dp)
         )
     }
+
 }
