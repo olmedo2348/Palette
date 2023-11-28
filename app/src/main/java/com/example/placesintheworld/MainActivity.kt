@@ -45,9 +45,6 @@ class MainActivity : ComponentActivity() {
             val navController = rememberNavController()
             PlacesIntheWorldTheme {
                 Scaffold(
-                    topBar = { MyTopBar() },
-                    floatingActionButton = { FAB(navController = navController) },
-                    floatingActionButtonPosition = FabPosition.End
                 ) {
                     Box(
                         modifier = Modifier
@@ -81,50 +78,3 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun MyTopBar() {
-    TopAppBar(
-        title = { Text(text = "PlaceIntheWorld", color = Color.White) },
-        colors = TopAppBarDefaults.mediumTopAppBarColors(containerColor = Principal),
-        navigationIcon = {
-            IconButton(onClick = { /*TODO*/ }) {
-                Icon(
-                    imageVector = Icons.Filled.Menu,
-                    contentDescription = "",
-                    tint = Color.White
-                )
-            }
-        },
-        actions = {
-            IconButton(onClick = { /*TODO*/ }) {
-
-                Icon(
-                    imageVector = Icons.Filled.MoreVert,
-                    contentDescription = "",
-                    tint = Color.White
-                )
-            }
-        }
-    )
-}
-
-@Composable
-private fun FAB(
-    navController: NavHostController
-) {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.BottomEnd
-    ) {
-        FloatingActionButton(
-            onClick = {
-                navController.navigate("PatallaLugares")
-            },
-            shape = RoundedCornerShape(40.dp),
-            containerColor = Segundo
-        ) {
-            Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = "check")
-        }
-    }
-}

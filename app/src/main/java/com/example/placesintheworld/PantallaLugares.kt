@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 
@@ -51,40 +52,36 @@ data class Lugares(
 fun getLugares(): List<Lugares> {
     return listOf(
         Lugares(
-            "Morella",
-            R.drawable.image,
-        ),
-        Lugares(
-            "Lugo",
+            "image 1",
             R.drawable.image1,
 
         ),
         Lugares(
-            "Bangkok",
+            "image 2",
             R.drawable.image2,
         ),
         Lugares(
-            "Perú",
+            "image 3",
             R.drawable.image3,
         ),
         Lugares(
-            "Pekín",
+            "image 4",
             R.drawable.image4,
         ),
         Lugares(
-            "Granada",
+            "image 5",
             R.drawable.image5,
         ),
         Lugares(
-            "Atenas",
+            "image 6",
             R.drawable.image6,
         ),
         Lugares(
-            "Yucatán",
+            "image 7",
             R.drawable.image7,
         ),
         Lugares(
-            "Seychelles",
+            "image 8",
             R.drawable.image8,
         ),
     )
@@ -113,7 +110,8 @@ fun ItemsLugares(lugar: Lugares, navHostController: NavHostController) {
             Text(
                 text = lugar.name,
                 color = Color.White,
-                modifier = Modifier.padding(8.dp)
+                modifier = Modifier.padding(8.dp),
+                textDecoration = TextDecoration.Underline,
             )
         }
     }
