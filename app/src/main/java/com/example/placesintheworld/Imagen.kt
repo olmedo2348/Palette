@@ -11,8 +11,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,26 +22,36 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.BlurredEdgeTreatment
 import androidx.compose.ui.draw.blur
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.times
-import androidx.navigation.NavHostController
 import com.example.placesintheworld.ui.theme.Principal
 import com.example.placesintheworld.ui.theme.Salty
 import com.example.placesintheworld.ui.theme.Segundo
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Imagen(navControllerName: String, navControllerImagen: Int, navController: NavHostController) {
+fun Imagen(navControllerName: String, navControllerImagen: Int) {
+    var rotation by remember { mutableStateOf(0f) }
+    var scale by remember { mutableStateOf(1f) }
+    var alpha by remember { mutableStateOf(1f) }
+    var blur by remember { mutableStateOf(0f) }
+
+    val imageSliderModel = remember {
+        ImageSliderModel(
+            rotationSlider = SliderFunction("Rotación", 0f, -180f, 180f) { rotation = it },
+            scaleSlider = SliderFunction("Escalado", 1f, 0.5f, 2f) { scale = it },
+            alphaSlider = SliderFunction("Efecto Alfa", 1f, 0f, 1f) { alpha = it },
+            blurSlider = SliderFunction("Desenfoque", 0f, 0f, 1f) { blur = it }
+        )
+    }
+
     Column(
         Modifier
             .fillMaxSize()
@@ -69,20 +77,6 @@ fun Imagen(navControllerName: String, navControllerImagen: Int, navController: N
                 fontWeight = FontWeight.Bold,
             )
         }
-        var rotation by remember { mutableStateOf(0f) }
-        var scale by remember { mutableStateOf(1f) }
-        var alpha by remember { mutableStateOf(1f) }
-        var blur by remember { mutableStateOf(0f) }
-
-        val imageSliderModel = remember {
-            ImageSliderModel(
-                rotationSlider = SliderFunction("Rotación", 0f, -180f, 180f) { rotation = it },
-                scaleSlider = SliderFunction("Escalado", 1f, 0.5f, 2f) { scale = it },
-                alphaSlider = SliderFunction("Efecto Alfa", 1f, 0f, 1f) { alpha = it },
-                blurSlider = SliderFunction("Desenfoque", 0f, 0f, 1f) { blur = it }
-            )
-        }
-
         ImageSlider(navControllerImagen, imageSliderModel, rotation, scale, alpha, blur)
     }
 }
