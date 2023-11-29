@@ -59,16 +59,12 @@ class MainActivity : ComponentActivity() {
                                 PatallaLugares(navController = navController)
                             }
                             composable(
-                                route = "Imagen/{textoLugar}/{imagenLugar}",
+                                route = "Imagen/{imagenLugar}",
                                 arguments = listOf(
-                                    navArgument("textoLugar") { type = NavType.StringType },
-                                    navArgument("imagenLugar") { type = NavType.IntType }
+                                    navArgument("imagenLugar") { type = NavType.IntType },
                                 )
                             ) { backStackEntry ->
-                                Imagen(
-                                    backStackEntry.arguments?.getString("textoLugar") ?: "",
-                                    backStackEntry.arguments?.getInt("imagenLugar") ?: 0
-                                )
+                                Imagen(backStackEntry.arguments?.getInt("imagenLugar") ?: 0)
                             }
                         }
                     }

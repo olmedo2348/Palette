@@ -94,7 +94,7 @@ fun ItemsLugares(lugar: Lugares, navHostController: NavHostController) {
             .fillMaxWidth()
             .padding(3.dp)
             .clickable {
-                navHostController.navigate("Imagen/${lugar.name}/${lugar.image}")
+                navHostController.navigate("Imagen/${lugar.image}")
             }
     ) {
         Image(
