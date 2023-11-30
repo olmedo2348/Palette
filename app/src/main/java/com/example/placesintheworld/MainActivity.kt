@@ -4,6 +4,9 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -62,7 +65,13 @@ class MainActivity : ComponentActivity() {
                                 route = "Imagen/{imagenLugar}",
                                 arguments = listOf(
                                     navArgument("imagenLugar") { type = NavType.IntType },
-                                )
+                                ),
+                                enterTransition = {
+                                    fadeIn(animationSpec = tween(700))
+                                },
+                                exitTransition = {
+                                    fadeOut(animationSpec = tween(700))
+                                },
                             ) { backStackEntry ->
                                 Imagen(backStackEntry.arguments?.getInt("imagenLugar") ?: 0)
                             }
@@ -73,4 +82,6 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
+
 

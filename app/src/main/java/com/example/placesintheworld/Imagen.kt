@@ -104,6 +104,7 @@ fun Imagen(navControllerImagen: Int) {
             Box(
                 modifier = Modifier
                     .weight(1f)
+                    .padding(it)
                     .fillMaxSize()
             ) {
                 Image(
