@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -67,7 +68,11 @@ class MainActivity : ComponentActivity() {
                                     navArgument("imagenLugar") { type = NavType.IntType },
                                 ),
                                 enterTransition = {
-                                    fadeIn(animationSpec = tween(700))
+                                    slideIntoContainer(
+                                        towards = AnimatedContentTransitionScope.SlideDirection.Companion.Up,
+                                        animationSpec = tween(700)
+                                    )
+   //                                 fadeIn(animationSpec = tween(700))
                                 },
                                 exitTransition = {
                                     fadeOut(animationSpec = tween(700))
